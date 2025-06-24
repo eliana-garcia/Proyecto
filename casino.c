@@ -124,17 +124,7 @@ int main(){
         // Jugar Ruleta
             mostrarR();
             limpiarPantalla();
-            printf("Bienvenido a la ruleta!\n");
-            printf("Reglas:\n");
-            printf("- Apuesta eligiendo una opción:\n");
-            printf("  1. Número exacto (0–36)\n");
-            printf("  2. Par o impar\n");
-            printf("  3. Rojo o negro\n");
-            printf("  4. Docena (1–12, 13–24, 25–36)\n");
-            printf("- Se gira la ruleta y cae un número.\n");
-            printf("- Si tu apuesta coincide, ganas según el tipo.\n");
-            presioneTeclaParaContinuar();
-            limpiarPantalla();
+            jugarRuleta();
             break;
         case 3:
         // JUgar Blackjack

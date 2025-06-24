@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "ruleta.h"
+#include "tdas/extra.h"
+
 
 #define ROJO 1
 #define NEGRO 0
@@ -11,23 +14,23 @@ int obtenerApuesta();
 int elegirTipoApuesta();
 int esGanador(int tipo, int eleccion, int resultado);
 int obtenerPago(int tipo);
-void limpiarPantalla();
+void limpiarPantallaRuleta();
 int elegirNumeroGanador();
 
-int main() {
+void jugarRuleta() {
     int saldo = 1000;
     int continuar = 1;
 
     srand(time(NULL));
 
     while (continuar) {
-        limpiarPantalla();
+        limpiarPantallaRuleta();
         mostrarExplicacion();
 
         int monto = obtenerApuesta();
         if (monto == 0) {
         printf("Has elegido salir del juego. Gracias por jugar!\n");
-        return 0;
+        return ;
         }
 
         if (monto > saldo) {
@@ -59,7 +62,7 @@ int main() {
                 break;
             default:
                 printf("Opcion no valida. Volviendo al menu...\n");
-                return 0;
+                return ;
         }
 
         printf("\nConfirmar jugada (1. Si / 2. No): ");
@@ -87,14 +90,14 @@ int main() {
             printf("Te has quedado sin saldo.\n");
             printf("Presiona ENTER para salir...\n");
             getchar(); getchar();
-            return 0;
+            return ;
         }
 
         printf("Deseas jugar otra vez? (1. Si / 2. No): ");
         scanf("%d", &continuar);
     }
 
-    return 0;
+    return ;
 }
 
 
@@ -107,6 +110,10 @@ void mostrarExplicacion() {
     printf("3. Rojo o negro (paga 1:1)\n");
     printf("4. Docenas (1-12, 13-24, 25-36) (paga 2:1)\n");
     printf("-------------------------------------------\n");
+    printf("- Se gira la ruleta y cae un numero.\n");
+    printf("- Si tu apuesta coincide, ganas segun el tipo.\n");
+    printf("-------------------------------------------\n");
+
 }
 
 int obtenerApuesta() {
@@ -140,7 +147,7 @@ int esGanador(int tipo, int eleccion, int resultado) {
     switch (tipo) {
         case 1:
             return (resultado == eleccion);
-        case 2:2
+        case 2:
             return (resultado != 0 && resultado % 2 == (eleccion - 1));
         case 3:
             return (resultado != 0 && esRojo(resultado) == (eleccion == 1));
@@ -183,7 +190,7 @@ int elegirNumeroGanador() {
     return ruleta[index];
 }
 
-void limpiarPantalla() {
+void limpiarPantallaRuleta(){
 #ifdef _WIN32
     system("cls");
 #else
