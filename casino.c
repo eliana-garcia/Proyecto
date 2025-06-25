@@ -107,19 +107,30 @@ int main(){
         limpiarBuffer();
         switch (opcion){
         case 1:
-        // jugar Tragamonedas
-            mostrarT();
-            limpiarPantalla();
-            printf("Bienvenido a las tragamonedas!\n");
-            printf("Reglas:\n");
-            printf("- Apuesta un monto.\n");
-            printf("- Gira 3 rodillos con símbolos aleatorios.\n");
-            printf("- Si salen 3 símbolos iguales → Premio mayor.\n");
-            printf("- Si salen 2 símbolos iguales → Premio menor.\n");
-            printf("- Si no hay coincidencias → Pierdes la apuesta.\n");
-            presioneTeclaParaContinuar();
-            limpiarPantalla();
-            break;
+                mostrarT();
+                printf("Bienvenido a las tragamonedas!\n");
+                printf("Reglas:\n");
+                printf("- Apuesta un monto.\n");
+                printf("- Gira 3 rodillos con símbolos aleatorios.\n");
+                printf("- Si salen 3 símbolos iguales → Premio mayor.\n");
+                printf("- Si salen 2 símbolos iguales → Premio menor.\n");
+                printf("- Si no hay coincidencias → Pierdes la apuesta.\n");
+                presioneTeclaParaContinuar();
+                limpiarPantalla();
+                limpiarPantalla();
+                float apuesta;
+                printf("Ingrese su apuesta: $");
+                scanf("%f", &apuesta);
+                limpiarBuffer();
+                if (apuesta > 0 && apuesta <= saldo) {
+                    saldo -= apuesta;
+                    saldo += jugarTragamonedas(apuesta);
+                } else {
+                    printf("Apuesta inválida.\n");
+                }
+                presioneTeclaParaContinuar();
+                limpiarPantalla();
+                break;
         case 2:
         // Jugar Ruleta
             mostrarR();
