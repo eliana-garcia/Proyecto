@@ -143,12 +143,14 @@ int main(){
         // JUgar Blackjack
             if (saldo <= 0) {
                 printf("\n\x1b[31m[!] No tienes saldo suficiente para jugar. Agrega saldo primero.\x1b[0m\n");
+                presioneTeclaParaContinuar();
+                limpiarPantalla();
                 break;
             }
             mostrarB();
             limpiarPantalla();
             printf("========================================\n");
-            printf("         \x1b[33m¡Bienvenido al BLACKJACK!\x1b[0m         \n");
+            printf("       \x1b[33m¡Bienvenido al BLACKJACK!\x1b[0m         \n");
             printf("========================================\n");
             printf("\x1b[36mReglas:\x1b[0m\n");
             printf("  - El objetivo es sumar lo más cerca de \x1b[32m21\x1b[0m sin pasarte.\n");
