@@ -94,6 +94,7 @@ void mostrarSaldo(char *nombre, float saldo){
 
 int main(){
     SetConsoleOutputCP(CP_UTF8);//caracteres en la consola
+    inicializarTablaHash(); //implementacion tabla hash para tragamonedas
     char nombre[50];
     float saldo;
     int opcion;
