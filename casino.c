@@ -1,3 +1,4 @@
+#include <windows.h>
 #include <stdio.h>
 #include "tdas/extra.h"
 #include "tragamonedas.h"
@@ -92,6 +93,7 @@ void mostrarSaldo(char *nombre, float saldo){
 }
 
 int main(){
+    SetConsoleOutputCP(CP_UTF8);//caracteres en la consola
     char nombre[50];
     float saldo;
     int opcion;
@@ -139,16 +141,26 @@ int main(){
             break;
         case 3:
         // JUgar Blackjack
+            if (saldo <= 0) {
+                printf("\n\x1b[31m[!] No tienes saldo suficiente para jugar. Agrega saldo primero.\x1b[0m\n");
+                break;
+            }
             mostrarB();
             limpiarPantalla();
-            printf("Bienvenido al Blackjack!\n");
-            printf("Reglas:\n");
-            printf("- El objetivo es sumar lo más cerca de 21 sin pasarte.\n");
-            printf("- Recibes 2 cartas y puedes:\n");
-            printf("  1. Pedir carta (\"Hit\")\n");
-            printf("  2. Plantarte (\"Stand\")\n");
-            printf("- Si te pasas de 21, pierdes automáticamente.\n");
-            printf("- Luego juega la banca. Gana quien esté más cerca de 21.\n");
+            printf("========================================\n");
+            printf("         \x1b[33m¡Bienvenido al BLACKJACK!\x1b[0m         \n");
+            printf("========================================\n");
+            printf("\x1b[36mReglas:\x1b[0m\n");
+            printf("  - El objetivo es sumar lo más cerca de \x1b[32m21\x1b[0m sin pasarte.\n");
+            printf("  - Recibes 2 cartas y puedes:\n");
+            printf("      1. Pedir carta\n");
+            printf("      2. Plantarte\n");
+            printf("  - \x1b[31mSi te pasas de 21, pierdes automáticamente.\x1b[0m\n");
+            printf("  - Luego juega la banca. Gana quien esté más cerca de 21.\n");
+            printf("----------------------------------------\n");
+            presioneTeclaParaContinuar();
+            limpiarPantalla();
+            iniciar_blackjack(&saldo);
             presioneTeclaParaContinuar();
             limpiarPantalla();
             break;
