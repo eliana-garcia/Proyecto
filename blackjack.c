@@ -58,7 +58,24 @@ void liberar_mano_lista(List *mano) {
     free(mano);
 }
 
+void bienvenidaReglas(){
+    printf("========================================\n");
+    printf("       \x1b[33m¡Bienvenido al BLACKJACK!\x1b[0m         \n");
+    printf("========================================\n");
+    printf("\x1b[36mReglas:\x1b[0m\n");
+    printf("  - El objetivo es sumar lo más cerca de \x1b[32m21\x1b[0m sin pasarte.\n");
+    printf("  - Recibes 2 cartas y puedes:\n");
+    printf("      1. Pedir carta\n");
+    printf("      2. Plantarte\n");
+    printf("  - \x1b[31mSi te pasas de 21, pierdes automáticamente.\x1b[0m\n");
+    printf("  - Luego juega la banca. Gana quien esté más cerca de 21.\n");
+    printf("----------------------------------------\n");
+    presioneTeclaParaContinuar();
+    limpiarPantalla();
+}
+
 void iniciar_blackjack(float *saldo) {
+    bienvenidaReglas();
     char seguir = 's';
     while (*saldo > 0 && (seguir == 's' || seguir == 'S')) {
         limpiarPantalla();
@@ -76,6 +93,7 @@ void iniciar_blackjack(float *saldo) {
         float apuesta;
         printf("¿Cuánto deseas apostar? $");
         scanf("%f", &apuesta);
+        limpiarBuffer();
 
         if (apuesta <= 0 || apuesta > *saldo) {
             printf("\x1b[31mApuesta inválida.\x1b[0m\n");
@@ -129,6 +147,7 @@ void iniciar_blackjack(float *saldo) {
         while (1) {
             printf("¿Qué deseas hacer? [\x1b[32mp\x1b[0m] Pedir carta / [\x1b[33mq\x1b[0m] Quedarse: ");
             scanf(" %c", &opcion);
+            limpiarBuffer();
             if (opcion == 'p' || opcion == 'P') {
                 int *carta = malloc(sizeof(int));
                 *carta = (rand() % 13) + 1;
@@ -220,15 +239,10 @@ void iniciar_blackjack(float *saldo) {
 
         if (*saldo <= 0) {
             printf("\n\x1b[31mTe has quedado sin saldo. Volviendo al menú principal.\x1b[0m\n");
-            getchar();
             break;
         }
 
         printf("\n¿Quieres jugar otra partida de Blackjack? (\x1b[32ms\x1b[0m/\x1b[31mn\x1b[0m): ");
         scanf(" %c", &seguir);
-
-        if (seguir == 's' || seguir == 'S') {
-            presioneTeclaParaContinuar();
-        }
     }
 }
