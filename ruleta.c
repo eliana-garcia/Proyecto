@@ -3,10 +3,15 @@
 #include <time.h>
 #include "ruleta.h"
 #include "tdas/extra.h"
-
-
-#define ROJO 1
-#define NEGRO 0
+#define FG_RESET   "\x1b[0m"
+#define FG_ROJO    "\x1b[31m"
+#define FG_VERDE   "\x1b[32m"
+#define FG_AMARILLO "\x1b[33m"
+#define FG_AZUL    "\x1b[34m"
+#define FG_CIAN    "\x1b[36m"
+#define FG_BLANCO  "\x1b[37m"
+#define COLOR_ROJO   1
+#define COLOR_NEGRO  0
 
 int esRojo(int numero);
 void mostrarExplicacion();
@@ -25,7 +30,7 @@ void jugarRuleta() {
 
     while (continuar) {
         limpiarPantallaRuleta();
-        mostrarExplicacion();
+        mostrarMenuRuleta();
 
         int monto = obtenerApuesta();
         if (monto == 0) {
@@ -73,7 +78,7 @@ void jugarRuleta() {
         }
 
         int resultado = elegirNumeroGanador();
-        printf("\nLA RULETA GIRA!... El numero eeees: %d %s!\n", resultado, esRojo(resultado) ? "Rojo" : "Negro");
+        printf("\nLA RULETA GIRA... El numero es... %d %s!\n", resultado, esRojo(resultado) ? "Rojo" : "Negro");
 
         if (esGanador(tipo, eleccion, resultado)) {
             int ganancia = monto * obtenerPago(tipo);
@@ -101,25 +106,39 @@ void jugarRuleta() {
 }
 
 
-void mostrarExplicacion() {
-    printf("BIENVENIDO A LA RULETA!!\n");
-    printf("-------------------------------------------\n");
-    printf("Puedes apostar a:\n");
-    printf("1. Numero exacto (paga 35:1)\n");
-    printf("2. Par o impar (paga 1:1)\n");
-    printf("3. Rojo o negro (paga 1:1)\n");
-    printf("4. Docenas (1-12, 13-24, 25-36) (paga 2:1)\n");
-    printf("-------------------------------------------\n");
-    printf("- Se gira la ruleta y cae un numero.\n");
-    printf("- Si tu apuesta coincide, ganas segun el tipo.\n");
-    printf("-------------------------------------------\n");
 
+void mostrarMenuRuleta(){
+    printf(FG_CIAN);
+    printf(" _______   __    __  __        ________  ________   ______  \n");
+    printf("|       \\ |  \\  |  \\|  \\      |        \\|        \\ /      \\ \n");
+    printf("| $$$$$$$\\| $$  | $$| $$      | $$$$$$$$ \\$$$$$$$$|  $$$$$$\\\n");
+    printf("| $$__| $$| $$  | $$| $$      | $$__       | $$   | $$__| $$\n");
+    printf("| $$    $$| $$  | $$| $$      | $$  \\      | $$   | $$    $$\n");
+    printf("| $$$$$$$\\| $$  | $$| $$      | $$$$$      | $$   | $$$$$$$$\n");
+    printf("| $$  | $$| $$__/ $$| $$_____ | $$_____    | $$   | $$  | $$\n");
+    printf("| $$  | $$ \\$$    $$| $$     \\| $$     \\   | $$   | $$  | $$\n");
+    printf(" \\$$   \\$$  \\$$$$$$  \\$$$$$$$$ \\$$$$$$$$    \\$$    \\$$   \\$$\n\n");
+    printf(FG_RESET );
+
+    printf(FG_AMARILLO "────────────────────────────────────────────────────────────\n" FG_RESET);
+    printf("Puedes apostar en los siguientes modos:\n\n");
+
+    printf(FG_VERDE " 1. Número exacto" FG_RESET "   (paga 35:1)\n");
+    printf(FG_VERDE " 2. Par o impar" FG_RESET  "     (paga 1:1)\n");
+    printf(FG_VERDE " 3. Rojo o negro" FG_RESET  "    (paga 1:1)\n");
+    printf(FG_VERDE " 4. Docenas" FG_RESET  "          (1-12, 13-24, 25-36) (paga 2:1)\n");
+
+    printf(FG_AMARILLO "\n────────────────────────────────────────────────────────────\n" FG_RESET);
+    printf("🎲  Se gira la ruleta y cae un número aleatorio.\n");
+    printf("💰  Si tu apuesta coincide, ganas según el tipo.\n");
+    printf(FG_AMARILLO "────────────────────────────────────────────────────────────\n" FG_RESET);
 }
+
 
 int obtenerApuesta() {
     int monto;
     while (1) {
-        printf("Ingresa el monto a apostar (0 para salir): $");
+         printf("\nIngresa el monto a apostar " FG_AMARILLO "(0 para salir)" FG_RESET  ": $");
         if (scanf("%d", &monto) != 1) {
             printf("Entrada invalida. Por favor, ingresa un numero.\n");
             while (getchar() != '\n'); 
