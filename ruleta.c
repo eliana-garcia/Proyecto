@@ -14,7 +14,7 @@
 #define COLOR_NEGRO  0
 
 int esRojo(int numero);
-void mostrarExplicacion();
+void mostrarMenuRuleta();
 int obtenerApuesta();
 int elegirTipoApuesta();
 int esGanador(int tipo, int eleccion, int resultado);
