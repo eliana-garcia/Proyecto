@@ -25,6 +25,7 @@ void mostrarT() {
     printf("  | | \\ /--\\ \\_| /--\\ |  | \\_/ | \\| |_ |_/ /--\\ __) \n");
     printf("\n");
     presioneTeclaParaContinuar();
+    limpiarPantalla();
 }
 
 void mostrarR() {
@@ -33,6 +34,7 @@ void mostrarR() {
     printf(" | \\ |_| |_ |_  | /--\\ \n");
     printf("\n");
     presioneTeclaParaContinuar();
+    limpiarPantalla();
 }
 
 void mostrarB() {
@@ -41,6 +43,7 @@ void mostrarB() {
     printf(" |_| |_ /--\\ \\_ |\\ \\_| /--\\ \\_ |\\ \n");
     printf("\n");
     presioneTeclaParaContinuar();
+    limpiarPantalla();
 }
 
 void registroUsuario(char *nombre, float *saldo){
@@ -50,7 +53,7 @@ void registroUsuario(char *nombre, float *saldo){
     limpiarBuffer();
 
     do {
-        printf("Ingrse su saldo inicial: $");
+        printf("Ingrese su saldo inicial: $");
         scanf("%f",saldo);
         limpiarBuffer();
         if(*saldo <= 0){
@@ -69,8 +72,7 @@ void mostrarMenuPrincipal(char *nombre, float saldo){
     printf("2. Jugar Ruleta\n");
     printf("3. Jugar Blackjack\n");
     printf("4. Agregar saldo \n");
-    printf("5. Ver saldo actual \n");
-    printf("6. Salir \n");
+    printf("5. Salir \n");
 }
 
 float agregarSaldo(float saldo){
@@ -87,9 +89,12 @@ float agregarSaldo(float saldo){
     return saldo;
 }
 
-void mostrarSaldo(char *nombre, float saldo){
-    printf("Jugador: %s \n",nombre);
-    printf("Saldo actual: $%.2f\n", saldo);
+int verificarSaldo(float saldo) {
+    if (saldo <= 0) {
+        printf("\n\x1b[31m[!] No tienes saldo suficiente para jugar. Agrega saldo primero.\x1b[0m\n");
+        return 1; // Indica que no hay saldo suficiente
+    }
+    return 0; // Hay saldo suficiente
 }
 
 int main(){
@@ -110,77 +115,54 @@ int main(){
         limpiarBuffer();
         switch (opcion){
         case 1:
-                mostrarT();
-                printf("Bienvenido a las tragamonedas!\n");
-                printf("Reglas:\n");
-                printf("- Apuesta un monto.\n");
-                printf("- Gira 3 rodillos con símbolos aleatorios.\n");
-                printf("- Si salen 3 símbolos iguales → Premio mayor.\n");
-                printf("- Si salen 2 símbolos iguales → Premio menor.\n");
-                printf("- Si no hay coincidencias → Pierdes la apuesta.\n");
-                presioneTeclaParaContinuar();
-                limpiarPantalla();
-                limpiarPantalla();
-                float apuesta;
-                printf("Ingrese su apuesta: $");
-                scanf("%f", &apuesta);
-                limpiarBuffer();
-                if (apuesta > 0 && apuesta <= saldo) {
-                    saldo -= apuesta;
-                    saldo += jugarTragamonedas(apuesta);
-                } else {
-                    printf("Apuesta inválida.\n");
-                }
-                presioneTeclaParaContinuar();
-                limpiarPantalla();
-                break;
+            if (verificarSaldo(saldo)) break;
+            mostrarT();
+            printf("Bienvenido a las tragamonedas!\n");
+            printf("Reglas:\n");
+            printf("- Apuesta un monto.\n");
+            printf("- Gira 3 rodillos con símbolos aleatorios.\n");
+            printf("- Si salen 3 símbolos iguales → Premio mayor.\n");
+            printf("- Si salen 2 símbolos iguales → Premio menor.\n");
+            printf("- Si no hay coincidencias → Pierdes la apuesta.\n");
+            presioneTeclaParaContinuar();
+            limpiarPantalla();
+            float apuesta;
+            printf("Ingrese su apuesta: $");
+            scanf("%f", &apuesta);
+            limpiarBuffer();
+            if (apuesta > 0 && apuesta <= saldo) {
+                saldo -= apuesta;
+                saldo += jugarTragamonedas(apuesta);
+            } else {
+                printf("Apuesta inválida.\n");
+            }
+            break;
         case 2:
         // Jugar Ruleta
+            if (verificarSaldo(saldo)) break;
             mostrarR();
             limpiarPantalla();
             jugarRuleta();
             break;
         case 3:
         // JUgar Blackjack
-            if (saldo <= 0) {
-                printf("\n\x1b[31m[!] No tienes saldo suficiente para jugar. Agrega saldo primero.\x1b[0m\n");
-                presioneTeclaParaContinuar();
-                limpiarPantalla();
-                break;
-            }
+            if (verificarSaldo(saldo)) break;
             mostrarB();
-            limpiarPantalla();
-            printf("========================================\n");
-            printf("       \x1b[33m¡Bienvenido al BLACKJACK!\x1b[0m         \n");
-            printf("========================================\n");
-            printf("\x1b[36mReglas:\x1b[0m\n");
-            printf("  - El objetivo es sumar lo más cerca de \x1b[32m21\x1b[0m sin pasarte.\n");
-            printf("  - Recibes 2 cartas y puedes:\n");
-            printf("      1. Pedir carta\n");
-            printf("      2. Plantarte\n");
-            printf("  - \x1b[31mSi te pasas de 21, pierdes automáticamente.\x1b[0m\n");
-            printf("  - Luego juega la banca. Gana quien esté más cerca de 21.\n");
-            printf("----------------------------------------\n");
-            presioneTeclaParaContinuar();
-            limpiarPantalla();
             iniciar_blackjack(&saldo);
-            presioneTeclaParaContinuar();
-            limpiarPantalla();
             break;
         case 4: 
             saldo = agregarSaldo(saldo);
             break;
         case 5:
-            mostrarSaldo(nombre,saldo);
-            break;
-        case 6:
             printf("Gracias por jugar, hasta luego %s!\n",nombre);
             break;
         default:
             printf("Opcion invalida, por favor intente nuevamente.\n");
         }
-        
-    }while (opcion != 6);
+        limpiarBuffer();
+        presioneTeclaParaContinuar();
+        limpiarPantalla();
+    }while (opcion != 5);
 
     return 0;
 
