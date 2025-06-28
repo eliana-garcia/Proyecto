@@ -157,3 +157,23 @@ Saldo actualizado: $1500.00
 Gracias por jugar, hasta luego
 ```
 
+## Contribuciones
+
+### Leandro Bravo:
+
+- Desarrollo y diseño de blackjack.
+- Revisión de código.
+
+### Eliana Garcia:
+
+- Diseño de interfaz de usuario.
+- Diseño de menús y navegación
+
+### Alex Reyes:
+- Diseño de arte ASCII para la consola.
+- Desarrollo y diseño de Tragamonedas.
+
+### Anahys Vera:
+
+- Gestión de saldos.
+- Desarrollo y diseño de Ruleta.
