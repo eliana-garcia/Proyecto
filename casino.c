@@ -74,16 +74,21 @@ void registroUsuario(char *nombre, float *saldo){
     limpiarPantalla();
 }
 
-void mostrarMenuPrincipal(char *nombre, float saldo){
-    printf("  Menu Principal \n");
-    printf("Jugador: %s \n",nombre);
-    printf("Saldo: $%.2f\n",saldo);
-    printf("1. Jugar Tragamonedas\n");
-    printf("2. Jugar Ruleta\n");
-    printf("3. Jugar Blackjack\n");
-    printf("4. Agregar saldo \n");
-    printf("5. Salir \n");
+void mostrarMenuPrincipal(char *nombre, float saldo) {
+    printf("\x1b[35m╔══════════════════════════════════════════════════════╗\x1b[0m\n");
+    printf("\x1b[35m║\x1b[0m              \x1b[36m🎰  C A S I N O   V I R T U A L  🎰     \x1b[35m║\x1b[0m\n");
+    printf("\x1b[35m╠══════════════════════════════════════════════════════╣\x1b[0m\n");
+    printf("\x1b[35m║\x1b[0m  Jugador: \x1b[33m%-30s\x1b[0m            \x1b[35m║\x1b[0m\n", nombre);
+    printf("\x1b[35m║\x1b[0m  Saldo:   \x1b[32m$%-35.2f\x1b[0m      \x1b[35m║\x1b[0m\n", saldo);
+    printf("\x1b[35m╠══════════════════════════════════════════════════════╣\x1b[0m\n");
+    printf("\x1b[35m║\x1b[0m  \x1b[33m1.\x1b[0m 🎰  Jugar Tragamonedas                           \x1b[35m║\x1b[0m\n");
+    printf("\x1b[35m║\x1b[0m  \x1b[33m2.\x1b[0m 🎯  Jugar Ruleta                                 \x1b[35m║\x1b[0m\n");
+    printf("\x1b[35m║\x1b[0m  \x1b[33m3.\x1b[0m 🃏  Jugar Blackjack                              \x1b[35m║\x1b[0m\n");
+    printf("\x1b[35m║\x1b[0m  \x1b[33m4.\x1b[0m 💰  Agregar saldo                                \x1b[35m║\x1b[0m\n");
+    printf("\x1b[35m║\x1b[0m  \x1b[33m5.\x1b[0m 🚪  Salir del casino                             \x1b[35m║\x1b[0m\n");
+    printf("\x1b[35m╚══════════════════════════════════════════════════════╝\x1b[0m\n");
 }
+
 
 float agregarSaldo(float saldo){
     float monto;
@@ -121,20 +126,24 @@ int main(){
     registroUsuario(nombre,&saldo); 
     do {
         mostrarMenuPrincipal(nombre,saldo);
-        printf("Seleccione una opcion: \n");
+        printf("\x1b[36m\n>>>\x1b[0m Seleccione una opción [1-5]: \x1b[33m");
         scanf("%d", &opcion);
+        printf("\x1b[0m"); 
         limpiarBuffer();
         switch (opcion){
         case 1:
             if (verificarSaldo(saldo)) break;
             mostrarT();
-            printf("Bienvenido a las tragamonedas!\n");
-            printf("Reglas:\n");
-            printf("- Apuesta un monto.\n");
-            printf("- Gira 3 rodillos con símbolos aleatorios.\n");
-            printf("- Si salen 3 símbolos iguales → Premio mayor.\n");
-            printf("- Si salen 2 símbolos iguales → Premio menor.\n");
-            printf("- Si no hay coincidencias → Pierdes la apuesta.\n");
+            printf("========================================\n");
+            printf("       \x1b[33m¡Bienvenido a las TRAGAMONEDAS!\x1b[0m     \n");
+            printf("========================================\n");
+            printf("\x1b[36mReglas:\x1b[0m\n");
+            printf("  - Apuesta un monto.\n");
+            printf("  - Se giran \x1b[35m3 rodillos\x1b[0m con símbolos aleatorios.\n");
+            printf("  - Si salen \x1b[32m3 símbolos iguales\x1b[0m → Premio mayor 💰.\n");
+            printf("  - Si salen \x1b[33m2 símbolos iguales\x1b[0m → Premio menor 🎉.\n");
+            printf("  - Si no hay coincidencias → Pierdes la apuesta ❌.\n");
+            printf("----------------------------------------\n");
             presioneTeclaParaContinuar();
             limpiarPantalla();
             float apuesta;
