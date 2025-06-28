@@ -151,7 +151,6 @@ int main(){
             scanf("%f", &apuesta);
             limpiarBuffer();
             if (apuesta > 0 && apuesta <= saldo) {
-                saldo -= apuesta;
                 saldo += jugarTragamonedas(apuesta, &saldo);
             } else {
                 printf("Apuesta inválida.\n");
