@@ -47,19 +47,24 @@ void mostrarB() {
 }
 
 void registroUsuario(char *nombre, float *saldo){
-    printf("Bienvenido al casino \n");
-    printf("Ingrese su nombre: ");
+    printf("\x1b[36m╔══════════════════════════════════════════════════════╗\x1b[0m\n");
+    printf("\x1b[36m║\x1b[0m\x1b[33m         ¡Bienvenido(a) al Casino Virtual!            \x1b[0m\x1b[36m║\x1b[0m\n");
+    printf("\x1b[36m╚══════════════════════════════════════════════════════╝\x1b[0m\n");
+
+    printf("\nIngrese su nombre:");
     scanf("%s",nombre);
     limpiarBuffer();
 
     do {
-        printf("Ingrese su saldo inicial: $");
+        printf("Ingrese su saldo inicial: \x1b[32m$\x1b[0m");
         scanf("%f",saldo);
         limpiarBuffer();
         if(*saldo <= 0){
-            printf("El saldo debe ser mayor a cero. \n");
+            printf("\x1b[31mEl saldo debe ser mayor a cero.\n\x1b[0m");
         }
     } while(*saldo <= 0);
+
+    printf("\x1b[33m\n¡Registro exitoso! ¡Mucha suerte, %s!\n\x1b[0m", nombre);
     presioneTeclaParaContinuar();
     limpiarPantalla();
 }
