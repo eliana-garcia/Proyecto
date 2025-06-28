@@ -58,15 +58,15 @@ float jugarTragamonedas(float apuesta_inicial, float *saldo_disponible) {
     int continuar = 1;
 
     // Validación inicial
-    if (apuesta <= 0 || apuesta > *saldo_disponible) {
-        printf("\x1b[31mError: Apuesta inválida (%.2f). Debe ser mayor a 0 y menor a tu saldo (%.2f)\x1b[0m\n", 
+    if (apuesta <= 0.0 || apuesta > *saldo_disponible) {
+        printf("\x1b[31mError: Apuesta inválida (%.2f). Debe ser mayor a 0 y menor o igual a tu saldo (%.2f)\x1b[0m\n", 
                apuesta, *saldo_disponible);
         return 0;
     }
 
-    *saldo_disponible -= apuesta;
-
     do {
+        limpiarPantalla();
+
         const char *r1 = obtenerEmojiAleatorio();
         const char *r2 = obtenerEmojiAleatorio();
         const char *r3 = obtenerEmojiAleatorio();
@@ -75,7 +75,7 @@ float jugarTragamonedas(float apuesta_inicial, float *saldo_disponible) {
 
         float premio = 0;
         int emoji_index1 = -1, emoji_index2 = -1, emoji_index3 = -1;
-        
+
         // Buscar índices de emojis
         for (int i = 0; i < MAX_EMOJIS; i++) {
             if (strcmp(r1, emojis[i]) == 0) emoji_index1 = i;
@@ -87,19 +87,21 @@ float jugarTragamonedas(float apuesta_inicial, float *saldo_disponible) {
         if (emoji_index1 == emoji_index2 && emoji_index2 == emoji_index3) {
             premio = apuesta * multiplicadores[emoji_index1];
             printf("🎉 ¡Jackpot! Ganaste $%.2f (x%.1f)\n", premio, multiplicadores[emoji_index1]);
+            *saldo_disponible += premio;
+            premio_total += premio;
         } 
         else if (emoji_index1 == emoji_index2 || emoji_index2 == emoji_index3 || emoji_index1 == emoji_index3) {
             int matching_index = (emoji_index1 == emoji_index2) ? emoji_index1 : 
                                (emoji_index2 == emoji_index3) ? emoji_index2 : emoji_index3;
             premio = apuesta * (multiplicadores[matching_index] * 0.5f);
             printf("✨ ¡Ganaste $%.2f (x%.1f)!\n", premio, multiplicadores[matching_index] * 0.5f);
+            *saldo_disponible += premio;
+            premio_total += premio;
         } 
         else {
             printf("💔 No ganaste esta vez.\n");
+            *saldo_disponible -= apuesta;
         }
-
-        premio_total += premio;
-        *saldo_disponible += premio;
 
         printf("\n\x1b[32mSaldo actual: $%.2f\x1b[0m\n", *saldo_disponible);
 
@@ -128,12 +130,14 @@ float jugarTragamonedas(float apuesta_inicial, float *saldo_disponible) {
             if (apuesta <= 0 || apuesta > *saldo_disponible) {
                 printf("\x1b[31mApuesta inválida. Debe ser entre $0.01 y $%.2f\x1b[0m\n", *saldo_disponible);
             } else {
-                *saldo_disponible -= apuesta;
                 break;
             }
         } while (1);
 
-        if (continuar != 1) break;
+        if (*saldo_disponible <= 0) {
+            printf("\x1b[31m¡Saldo agotado!\x1b[0m\n");
+            break;
+        }
 
     } while (continuar == 1);
 
