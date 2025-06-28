@@ -86,6 +86,7 @@ float agregarSaldo(float saldo){
     }while(monto <= 0 );
     saldo += monto;
     printf("Saldo actualizado: $%.2f\n",saldo);
+    presioneTeclaParaContinuar();
     return saldo;
 }
 
