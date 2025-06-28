@@ -142,7 +142,7 @@ int main(){
             if (verificarSaldo(saldo)) break;
             mostrarR();
             limpiarPantalla();
-            jugarRuleta();
+            jugarRuleta(&saldo);
             break;
         case 3:
         // JUgar Blackjack
