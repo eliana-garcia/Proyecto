@@ -15,7 +15,7 @@
 
 int esRojo(int numero);
 void mostrarMenuRuleta();
-int obtenerApuesta();
+int obtenerApuesta(float saldo);
 int elegirTipoApuesta();
 int esGanador(int tipo, int eleccion, int resultado);
 int obtenerPago(int tipo);
@@ -26,11 +26,11 @@ void jugarRuleta(float *saldo) {
     int continuar = 1;
     srand(time(NULL));
 
-    while (continuar) {
+    while (continuar==1) {
         limpiarPantallaRuleta();
         mostrarMenuRuleta();
 
-        int monto = obtenerApuesta();
+        int monto = obtenerApuesta(*saldo);
         if (monto == 0) {
             printf("Has elegido salir del juego. Gracias por jugar!\n");
             return;
@@ -38,8 +38,6 @@ void jugarRuleta(float *saldo) {
 
         if (monto > *saldo) {
             printf("No tienes saldo suficiente. Saldo actual: $%.2f\n", *saldo);
-            printf("Presiona ENTER para volver al menu principal...\n");
-            getchar(); getchar();
             continue;
         }
 
@@ -91,8 +89,6 @@ void jugarRuleta(float *saldo) {
 
         if (*saldo <= 0) {
             printf("Te has quedado sin saldo.\n");
-            printf("Presiona ENTER para salir...\n");
-            getchar(); getchar();
             return;
         }
 
@@ -131,10 +127,11 @@ void mostrarMenuRuleta(){
 }
 
 
-int obtenerApuesta() {
+int obtenerApuesta(float saldo) {
     int monto;
     while (1) {
-         printf("\nIngresa el monto a apostar " FG_AMARILLO "(0 para salir)" FG_RESET  ": $");
+        printf("\nTu saldo actual es: " FG_VERDE "$%.2f" FG_RESET "\n", saldo);
+        printf("Ingresa el monto a apostar " FG_AMARILLO "(0 para salir)" FG_RESET  ": $");
         if (scanf("%d", &monto) != 1) {
             printf("Entrada invalida. Por favor, ingresa un numero.\n");
             while (getchar() != '\n'); 
