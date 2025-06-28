@@ -22,10 +22,8 @@ int obtenerPago(int tipo);
 void limpiarPantallaRuleta();
 int elegirNumeroGanador();
 
-void jugarRuleta() {
-    int saldo = 1000;
+void jugarRuleta(float *saldo) {
     int continuar = 1;
-
     srand(time(NULL));
 
     while (continuar) {
@@ -34,14 +32,14 @@ void jugarRuleta() {
 
         int monto = obtenerApuesta();
         if (monto == 0) {
-        printf("Has elegido salir del juego. Gracias por jugar!\n");
-        return ;
+            printf("Has elegido salir del juego. Gracias por jugar!\n");
+            return;
         }
 
-        if (monto > saldo) {
-            printf("No tienes saldo suficiente. Saldo actual: $%d\n", saldo);
+        if (monto > *saldo) {
+            printf("No tienes saldo suficiente. Saldo actual: $%.2f\n", *saldo);
             printf("Presiona ENTER para volver al menu principal...\n");
-            getchar(); getchar(); 
+            getchar(); getchar();
             continue;
         }
 
@@ -67,7 +65,7 @@ void jugarRuleta() {
                 break;
             default:
                 printf("Opcion no valida. Volviendo al menu...\n");
-                return ;
+                return;
         }
 
         printf("\nConfirmar jugada (1. Si / 2. No): ");
@@ -81,28 +79,26 @@ void jugarRuleta() {
         printf("\nLA RULETA GIRA... El numero es... %d %s!\n", resultado, esRojo(resultado) ? "Rojo" : "Negro");
 
         if (esGanador(tipo, eleccion, resultado)) {
-            int ganancia = monto * obtenerPago(tipo);
-            saldo += ganancia;
-            printf("¡SIII GANASTE! Has ganado $%d\n", ganancia);
+            float ganancia = monto * obtenerPago(tipo);
+            *saldo += ganancia;
+            printf("¡SIII GANASTE! Has ganado $%.2f\n", ganancia);
         } else {
-            saldo -= monto;
+            *saldo -= monto;
             printf("Perdiste:(. Has perdido $%d\n", monto);
         }
 
-        printf("Saldo actual: $%d\n", saldo);
+        printf("Saldo actual: $%.2f\n", *saldo);
 
-        if (saldo <= 0) {
+        if (*saldo <= 0) {
             printf("Te has quedado sin saldo.\n");
             printf("Presiona ENTER para salir...\n");
             getchar(); getchar();
-            return ;
+            return;
         }
 
         printf("Deseas jugar otra vez? (1. Si / 2. No): ");
         scanf("%d", &continuar);
     }
-
-    return ;
 }
 
 
