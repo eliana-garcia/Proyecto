@@ -136,6 +136,7 @@ int main(){
             } else {
                 printf("Apuesta inválida.\n");
             }
+            presioneTeclaParaContinuar();
             break;
         case 2:
         // Jugar Ruleta
@@ -143,12 +144,14 @@ int main(){
             mostrarR();
             limpiarPantalla();
             jugarRuleta(&saldo);
+            presioneTeclaParaContinuar();
             break;
         case 3:
         // JUgar Blackjack
             if (verificarSaldo(saldo)) break;
             mostrarB();
             iniciar_blackjack(&saldo);
+            presioneTeclaParaContinuar();
             break;
         case 4: 
             saldo = agregarSaldo(saldo);
@@ -160,7 +163,6 @@ int main(){
             printf("Opcion invalida, por favor intente nuevamente.\n");
         }
         limpiarBuffer();
-        presioneTeclaParaContinuar();
         limpiarPantalla();
     }while (opcion != 5);
 
